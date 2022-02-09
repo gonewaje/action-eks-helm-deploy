@@ -12,16 +12,16 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-        
-      - name: Set env
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
           
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-        
+         
+      - name: Echo env
+        run: echo "${{ secrets.DOCKERHUB_USERNAME }}"
+ 
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -32,6 +32,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: dgrlabs/action-eks-helm-deploy:latest,dgrlabs/action-eks-helm-deploy:${env.RELEASE_VERSION}
+          tags: dgrlabs/action-eks-helm-deploy:latest
           
 
