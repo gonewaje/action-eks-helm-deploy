@@ -1,5 +1,5 @@
 # action.yml
-name: 'EKS Helm Deployment'
+name: 'Amazon EKS Helm Deployment'
 description: 'Deploy a helm chart to EKS cluster.'
 branding:
     icon: anchor
@@ -43,6 +43,9 @@ inputs:
     image-tag:
         description: 'docker image tag for new deployment'
         required: false
+    application-name:
+        description: 'application name for deployment'
+        required: true
 runs:
     using: 'docker'
     image: 'docker://dgrlabs/action-eks-helm-deploy:latest'
@@ -59,3 +62,4 @@ runs:
         DEPLOY_CHART_PATH: ${{ inputs.chart-path }}
         DEPLOY_IMAGE_TAG: ${{ inputs.image-tag }}
         HELM_REPOSITORY: ${{ inputs.chart-repository }}
+        APP_NAME: ${{ inputs.application-name }}

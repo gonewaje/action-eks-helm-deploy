@@ -11,10 +11,23 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: dgrlabs/action-eks-helm-deploy
-          tag_with_ref: true
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Get the current 
+        shell: bash
+        run: echo "::set-output name=tag::${GITHUB_REF##*/}"
+        id: version
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: dgrlabs/action-eks-helm-deploy:latest,dgrlabs/action-eks-helm-deploy:${{ steps.version.outputs.tag }}
+          
+
