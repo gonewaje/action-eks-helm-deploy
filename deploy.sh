@@ -41,4 +41,7 @@ if [ ! -n "$DEPLOY_NAME" ]; then
    DEPLOY_NAME="${DEPLOY_NAMESPACE}-${APP_NAME}"
 fi
 
-echo "helm upgrade --install --set-string image.tag=${DEPLOY_IMAGE_TAG} --namespace ${DEPLOY_NAMESPACE} -f ${DEPLOY_CHART_PATH}/${DEPLOY_CONFIG_FILES} ${DEPLOY_NAME} ${DEPLOY_CHART_PATH}"
+helm upgrade --install \
+	--set-string image.tag=${DEPLOY_IMAGE_TAG} \
+	--namespace ${DEPLOY_NAMESPACE} \
+	-f ${DEPLOY_CHART_PATH}/${DEPLOY_CONFIG_FILES} ${DEPLOY_NAME} ${DEPLOY_CHART_PATH}
