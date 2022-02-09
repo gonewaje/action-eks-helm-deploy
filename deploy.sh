@@ -13,7 +13,8 @@ else
 fi
 
 # Helm Deployment
-if [ -n "$DEPLOY_NAMESPACE" ]; then
+
+if [ ! -n "$DEPLOY_NAMESPACE" ]; then
     case ${GITHUB_REF_NAME} in
       test)
         DEPLOY_NAMESPACE=test
@@ -25,26 +26,19 @@ if [ -n "$DEPLOY_NAMESPACE" ]; then
         DEPLOY_NAMESPACE=production
       ;; 
     esac
-    echo ${NAMESPACE}
+    echo ${DEPLOY_NAMESPACE}
 fi
 
-if [ -n "$DEPLOY_CHART_PATH" ]; then
+if [ ! -n "$DEPLOY_CHART_PATH" ]; then
    DEPLOY_CHART_PATH="helm/${APP_NAME}"
 fi
 
-if [ -n "$DEPLOY_CONFIG_FILES" ]; then
+if [ ! -n "$DEPLOY_CONFIG_FILES" ]; then
    DEPLOY_CONFIG_FILES="${DEPLOY_NAMESPACE}.yaml"
 fi
 
-if [ -n "$DEPLOY_NAME" ]; then
+if [ ! -n "$DEPLOY_NAME" ]; then
    DEPLOY_NAME="${DEPLOY_NAMESPACE}-${APP_NAME}"
 fi
 
-if [ -n "$DEPLOY_IMAGE_TAG" ]; then
-   DEPLOY_IMAGE_TAG="${GITHUB_SHA_SHORT}"
-fi
-
-echo "helm upgrade --install \
-     --set-string image.tag=${DEPLOY_IMAGE_TAG} \
-     --namespace ${DEPLOY_NAMESPACE} \
-     -f ${DEPLOY_CHART_PATH}/${DEPLOY_CONFIG_FILES} ${DEPLOY_NAME} ${DEPLOY_CHART_PATH}"
+echo "helm upgrade --install --set-string image.tag=${DEPLOY_IMAGE_TAG} --namespace ${DEPLOY_NAMESPACE} -f ${DEPLOY_CHART_PATH}/${DEPLOY_CONFIG_FILES} ${DEPLOY_NAME} ${DEPLOY_CHART_PATH}"

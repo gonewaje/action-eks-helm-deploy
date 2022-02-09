@@ -36,10 +36,6 @@ inputs:
     chart-path:
         description: 'The path of the chart.'
         required: false
-        default: 'helm/'
-    chart-repository:
-        description: 'The repository of the chart.'
-        required: false
     image-tag:
         description: 'docker image tag for new deployment'
         required: false
@@ -61,5 +57,4 @@ runs:
         DEPLOY_NAME: ${{ inputs.name }}
         DEPLOY_CHART_PATH: ${{ inputs.chart-path }}
         DEPLOY_IMAGE_TAG: ${{ inputs.image-tag }}
-        HELM_REPOSITORY: ${{ inputs.chart-repository }}
         APP_NAME: ${{ inputs.application-name }}
