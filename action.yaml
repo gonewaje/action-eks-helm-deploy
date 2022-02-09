@@ -43,6 +43,9 @@ inputs:
     image-tag:
         description: 'docker image tag for new deployment'
         required: false
+    application-name:
+        description: 'application name for deployment'
+        required: true
 runs:
     using: 'docker'
     image: 'docker://dgrlabs/action-eks-helm-deploy:latest'
@@ -59,3 +62,4 @@ runs:
         DEPLOY_CHART_PATH: ${{ inputs.chart-path }}
         DEOLOY_IMAGE_TAG: ${{ inputs.image-tag }}
         HELM_REPOSITORY: ${{ inputs.chart-repository }}
+        APP_NAME: ${{ inputs.application-name }}
