@@ -1,12 +1,19 @@
-FROM python:3.8-slim-buster
+FROM alpine:3.13
 
-COPY deploy.sh /usr/local/bin/deploy
+ARG KUBECTL_VERSION="1.21.2"
 
-# Install the toolset.
-RUN apt -y update && apt -y install curl \
-    && pip install awscli \
-    && curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash \
-    && curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
-    && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+RUN apk add py-pip curl wget ca-certificates git bash jq gcc alpine-sdk
+RUN pip install 'awscli==1.22.26'
+RUN curl -L -o /usr/bin/kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
+RUN chmod +x /usr/bin/kubectl
 
-CMD deploy
+RUN curl -o /usr/bin/aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
+RUN chmod +x /usr/bin/aws-iam-authenticator
+
+RUN wget https://get.helm.sh/helm-v3.8.0-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm
+RUN chmod +x /usr/local/bin/helm
+
+COPY deploy.sh /deploy.sh
+RUN chmod +x /deploy.sh
+
+ENTRYPOINT ["/deploy.sh"]:

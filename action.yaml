@@ -57,5 +57,5 @@ runs:
         DEPLOY_VALUES: ${{ inputs.values }}
         DEPLOY_NAME: ${{ inputs.name }}
         DEPLOY_CHART_PATH: ${{ inputs.chart-path }}
-        DEOLOY_IMAGE_TAG: ${{ inputs.image-tag }}
+        DEPLOY_IMAGE_TAG: ${{ inputs.image-tag }}
         HELM_REPOSITORY: ${{ inputs.chart-repository }}

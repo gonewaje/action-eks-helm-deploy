@@ -14,7 +14,7 @@ fi
 
 # Helm Deployment
 if [ -n "$DEPLOY_NAMESPACE" ]; then
-    case ${GITHUB_REF##*/} in
+    case ${GITHUB_REF_NAME} in
       test)
         DEPLOY_NAMESPACE=test
       ;;
@@ -41,11 +41,10 @@ if [ -n "$DEPLOY_NAME" ]; then
 fi
 
 if [ -n "$DEPLOY_IMAGE_TAG" ]; then
-   IMAGE_TAG="${GITHUB_SHA_SHORT}"
+   DEPLOY_IMAGE_TAG="${GITHUB_SHA_SHORT}"
 fi
 
-
-helm upgrade --install \
+echo "helm upgrade --install \
      --set-string image.tag=${DEPLOY_IMAGE_TAG} \
      --namespace ${DEPLOY_NAMESPACE} \
-     -f ${DEPLOY_CHART_PATH}/${DEPLOY_CONFIG_FILES} ${DEPLOY_NAME} ${DEPLOY_CHART_PATH}
+     -f ${DEPLOY_CHART_PATH}/${DEPLOY_CONFIG_FILES} ${DEPLOY_NAME} ${DEPLOY_CHART_PATH}"
