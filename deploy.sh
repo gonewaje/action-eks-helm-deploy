@@ -19,6 +19,9 @@ if [ ! -n "$DEPLOY_NAMESPACE" ]; then
       test)
         DEPLOY_NAMESPACE=test
       ;;
+      development)
+        DEPLOY_NAMESPACE=development
+      ;;
       staging)
         DEPLOY_NAMESPACE=staging
       ;;
