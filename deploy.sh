@@ -28,6 +28,9 @@ if [ ! -n "$DEPLOY_NAMESPACE" ]; then
       main)
         DEPLOY_NAMESPACE=production
       ;; 
+      *)
+        DEPLOY_NAMESPACE=development
+      ;; 
     esac
     echo ${DEPLOY_NAMESPACE}
 fi
