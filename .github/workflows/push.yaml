@@ -28,6 +28,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: dgrlabs/action-eks-helm-deploy:latest,dgrlabs/action-eks-helm-deploy:${{ steps.version.outputs.tag }}
+          tags: gonewaje/action-eks-helm-deploy:latest,gonewaje/action-eks-helm-deploy:${{ steps.version.outputs.tag }}
           
 
