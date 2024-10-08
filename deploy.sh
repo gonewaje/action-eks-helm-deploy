@@ -28,6 +28,9 @@ if [ ! -n "$DEPLOY_NAMESPACE" ]; then
       main)
         DEPLOY_NAMESPACE=production
       ;; 
+      feat/gone)
+        DEPLOY_NAMESPACE=development-poc
+      ;; 
       *)
         DEPLOY_NAMESPACE=development
       ;; 
